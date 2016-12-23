@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>抽奖</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="style.css">
+<script language="javascript">
+    var timer;
+    var randnum;
+    var num;
+    function setTimer(){
+        document.getElementById("start").disabled = true;
+        document.getElementById("end").disabled = false;
+    }
+    function getRandNum(){
+        randnum = GetRnd(1,num);
+        return randnum;
+    }
+    function GetRnd(min,max){
+        randnum = parseInt(Math.random()*(max-min+1));
+        return randnum;
+    }
+    function clearTimer(){
+        clearInterval(timer);
+        document.getElementById("start").disabled = false;
+        document.getElementById("end").disabled = true;
+    }
+    function ReadExcel() {
+        var i;
+        //得到文件路径的值
+        var filePath = document.getElementById("upfile").value;
+        //创建操作EXCEL应用程序的实例
+        var oXL = new ActiveXObject("Excel.application");
+        //打开指定路径的excel文件
+        var oWB = oXL.Workbooks.open(filePath);
+        //操作第一个sheet(从一开始，而非零)
+        oWB.worksheets(1).select();
+        var oSheet = oWB.ActiveSheet;
+        timer = setInterval(function(){
+            var i = getRandNum();
+            document.getElementById("result").value = oSheet.Cells(i, 1).value;
+            document.getElementById("name").value = oSheet.Cells(i, 2).value;
+            document.getElementById("classnum").value = oSheet.Cells(i, 3).value;
+        },500);
+        //退出操作excel的实例对象
+        oXL.Application.Quit();
+        //手动调用垃圾收集器
+        CollectGarbage();
+    }
+    function ReadReal_num() {
+        //得到文件路径的值
+        var filePath = document.getElementById("upfile").value;
+        //创建操作EXCEL应用程序的实例
+        var oXL = new ActiveXObject("Excel.application");
+        //打开指定路径的excel文件
+        var oWB = oXL.Workbooks.open(filePath);
+        //操作第一个sheet(从一开始，而非零)
+        oWB.worksheets(1).select();
+        //获取行数
+        var colcount = oWB.Worksheets(1).UsedRange.Cells.Rows.Count;
+        document.getElementById("real_num").value = colcount;
+        //退出操作excel的实例对象
+        oXL.Application.Quit();
+        //手动调用垃圾收集器
+        CollectGarbage();
+    }
+</script>
+</head>
+<body>
+    <center>
+        <div id="main">
+            <h1>获奖小伙伴</h1>
+            <p class="p1">
+                <input id="result" type="text" size="30" readonly="readonly" />
+            </p>
+            <p class="p2">
+                <span>姓名：</span>
+                <input name="text1" type="text" id="name" size="28" readonly/>
+                <span>班级：</span>
+                <input name="text2" type="text" id="classnum" size="28" readonly/>
+            </p>
+        </div>
+        <p></p>
+        <div id="setter">
+            <h2>系统设置</h2>
+            <span>学生名单：</span>
+            <input type="file" id="upfile" />
+            <input id="set_number" type="button" value="读取" onclick="ReadReal_num();"/>
+            <span>活动人数：</span>
+            <input type="text" id="real_num">
+            <p></p>
+            <p class="p3">
+                <input id="start" type="button" value="开始" onclick="setTimer();ReadExcel();" />   
+                <input id="end" type="button" value="停" onclick="clearTimer();" disabled="disabled" />
+                <input id="reset" type="button" value="重新开始抽奖" onclick="window.location.href=window.location.href;"/>
+            </p>
+            <p></p>
+        </div>
+    <center>
+</body>
+</html>

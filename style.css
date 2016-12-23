@@ -1,0 +1,56 @@
+
+#main{
+	margin-top: 30px;
+}
+#result {
+	height:130px;
+	width:800px;
+	border:2px solid red;
+	font-size:120px;
+	text-align: center;
+}
+.p2 span{
+	font-size: 24px;
+	font-weight: bold;
+}
+.p2 input{
+	height:50px;
+	width:200px;
+	margin-right: 100px;
+	border:1px solid red;
+	font-size:28px;
+}
+#setter{
+	margin-top: 100px;
+	border:1px solid;
+	width: 800px;
+}
+#setter span{
+	font-size: 20px;
+	font-weight: bold;
+	margin-left: 30px;
+}
+#setter input{
+	height: 40px;
+}
+#set_number{
+	border: 1px solid;
+	border-color: #aaa;
+	width:80px;
+	height: 40px;
+	font-size: 20px;
+	background: #fc0;
+}
+#rel_num{
+	width: 100px;
+	font-size:20px;
+}
+#start,#end,#reset{
+	border: 1px solid;
+	border-color: #aaa;
+	height: 60px;
+	width:200px;
+	margin: 10px 20px;
+	font-size: 24px;
+	background: #fc0;
+}
